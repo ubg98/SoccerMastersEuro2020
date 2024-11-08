@@ -1,79 +1,96 @@
 <!DOCTYPE html><html lang="en"><head>
-	
-	<meta charset="utf-8">
-	
-	<title>Cursed Treasure 2 Unblocked - CrazyGames</title>
-	
-	<meta id="viewport" name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	
-	
-	<link rel="shortcut icon" type="image/png" href="./favicon.png">
-	
-	
-	<script type="text/javascript" src="./cursed-treasure-2.js"></script>
-	
-	<script>
-		window.addEventListener ("touchmove", function (event) { event.preventDefault (); }, { capture: false, passive: false });
-		if (typeof window.devicePixelRatio != 'undefined' && window.devicePixelRatio > 2) {
-			var meta = document.getElementById ("viewport");
-			meta.setAttribute ('content', 'width=device-width, initial-scale=' + (2 / window.devicePixelRatio) + ', user-scalable=no');
-		}
-	</script>
-	
-	<style>
-		html,body { margin: 0; padding: 0; height: 100%; overflow: hidden; }
-		#openfl-content { background: #000000; width: 100%; height: 100%; }
-		@font-face {
-			font-family: 'Source Han Sans CN Bold Bold';
-			src: url('fonts/SourceHanSansCN-Bold.otf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'RobotoCondensed-Regular';
-			src: url('fonts/RobotoCondensed-Regular.ttf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Noto Sans SC Medium';
-			src: url('fonts/NotoSansSC-Medium.otf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'Source Han Sans CN Normal';
-			src: url('fonts/SourceHanSansCN-Normal.otf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'NotMaryKateNF';
-			src: url('fonts/NotMaryKateNF.ttf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-		@font-face {
-			font-family: 'RobotoCondensed-Bold';
-			src: url('fonts/RobotoCondensed-Bold.ttf') format('truetype');
-			font-weight: normal;
-			font-style: normal;
-		}
-
-	</style>
-	
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no">    
+    <link rel="stylesheet" href="assets/css/app.css" type="text/css">    
+    <title>
+        Football Masters
+     Unblocked - CrazyGames</title>
+    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
 </head>
-<body>
-	
-	<noscript>This webpage makes extensive use of JavaScript. Please enable JavaScript in your web browser to view this page.</noscript>
-	
-	<div id="openfl-content"></div>
-	
-	<script type="text/javascript">
-		lime.embed ("cursed-treasure-2", "openfl-content", 0, 0, { parameters: {} });
-	</script>
-	
 
+<body>
+    <div id="content"></div>
+    <div id="orientation"></div>
+    <div id="loader">Loading ...</div>
+    <script type="text/javascript" src="patch/js/null.js?imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    <script type="text/javascript" src="assets/lib/nape.min.js">
+        var nape = "nape.min.js";
+    </script>
+    <script type="text/javascript" src="assets/lib/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="assets/lib/easeljs-0.8.2.combined.js"></script>
+    <script type="text/javascript" src="assets/lib/bluebird.min.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser.min.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser-cachebuster.min.js"></script>
+    <script type="text/javascript" src="assets/lib/phaser-super-storage.min.js"></script>
+    <script type="text/javascript" src="assets/lib/dragonBones.min.js"></script>
+  
+    <script src="patch/js/crazygames-sdk-v1.js"></script>
+
+    <script type="text/javascript">
+    var useEvents = (typeof(Event) === 'function');
+
+        var myDispatchEvent = function (name){
+            var event;
+            if (useEvents){
+                event =  new Event(name);
+            }else{
+                event = document.createEvent('Event');
+                event.initEvent(name, true, true);
+            }
+            document.getElementById("content").dispatchEvent(event);
+        }
+            
+        document.getElementById('content').addEventListener('sdk_init',
+        function () {            
+            const {CrazySDK} = window.CrazyGames; // this is modified    
+            console.log("getting instance",CrazySDK);
+            var crazysdk = CrazySDK.getInstance();
+            try{
+                crazysdk.init();
+            }catch (err) {
+                console.log("Init SDK Error",err);
+            }
+            installListeners();
+            document.getElementById('content').addEventListener('sdk_request_ad',
+                function () { 
+                    const {CrazySDK} = window.CrazyGames; // this is modified   
+                    var sdk = CrazySDK.getInstance(); 
+                    console.log("request ad",sdk);
+                    sdk.requestAd();
+                });
+        });
+
+        var installListeners=function() {
+            const {CrazySDK} = window.CrazyGames; // this is modified  
+            var crazysdk = CrazySDK.getInstance();  
+            console.log("adding listeners",crazysdk);
+            crazysdk.addEventListener('adStarted', adStarted);
+            crazysdk.addEventListener('adError', adError);
+            crazysdk.addEventListener('adFinished', adFinished);
+        }
+
+        var adStarted = function(){
+            console.log("adStarted");
+            myDispatchEvent('sdk_mute');
+        }
+        
+        var adError = function(){
+            console.log("adError");
+            myDispatchEvent('sdk_unmute');
+            myDispatchEvent('sdk_ad_finished');
+        }
+        
+        var adFinished = function(){
+            console.log("adFinished");
+            myDispatchEvent('sdk_unmute');
+            myDispatchEvent('sdk_ad_finished');
+        }
+
+
+    </script>
+
+<script type="text/javascript" src="football_masters.min.js?2596e3a3ca7d7e599f6f"></script>
 
 </body></html>
